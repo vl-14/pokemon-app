@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Pokemon.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,14 +6,27 @@ import {
 	fetchAsyncPokemonDetail,
 } from "../../redux/pokemons/pokeSlice";
 import { Link, useParams } from "react-router-dom";
+import { catchPokemon } from "../../redux/pokemons/trainerSlice";
 
 const Pokemon = () => {
 	const { name } = useParams("name");
 	const pokemonDetail = useSelector(getPokemonDetail);
+    const acquiredPokemon = useSelector(state => state.acquiredPokemon);
+    const [catching, setCatching] = useState('Catch This?');
+    const [catchable, setCatchable] = useState(true);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(fetchAsyncPokemonDetail(name));
 	}, [name, dispatch]);
+
+    if (acquiredPokemon) {
+        let caught = acquiredPokemon.find(pokemonDetail.name);
+        setCatchable(caught);
+        if (caught) {
+            setCatching('Caught!');
+        }
+    }
 
 	let isLoading = <div>...Loading</div>;
 	let renderDetail = "";
@@ -39,8 +52,10 @@ const Pokemon = () => {
 					</div>
 				</div>
 				<div className="pokemon-catch">
-					<button>Catch This?</button>
-					<button>View Pocket</button>
+					<button onClick={() => handleCatch()}>{catching}</button>
+					<Link to="/trainer">
+						<button>View Pocket</button>
+					</Link>
 					<Link to="/">
 						<button>Back to List</button>
 					</Link>
@@ -50,6 +65,18 @@ const Pokemon = () => {
 	} else {
 		renderDetail = isLoading;
 	}
+
+    let handleCatch = () => {
+        if(!catchable) {
+            return;
+        }
+        setCatching('Catching now!');
+        setTimeout(() => {
+            dispatch(catchPokemon(name));
+            setCatching('Caught!');
+            setCatchable(false);
+        }, 3000)
+    }
 
 	return <div className="pokemon-section">{renderDetail}</div>;
 };

@@ -1,0 +1,26 @@
+.section {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 15px;
+    width: 100%;
+    .section-left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .section-right {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        flex: 4;
+    }
+}
