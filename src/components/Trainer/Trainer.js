@@ -1,15 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Trainer.scss";
 import red from "../../images/red.png";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Trainer = () => {
-	const acquired = useSelector((state) => state.acquired);
-    console.log('HEEERRREEE', acquired);
+	const acquired = useSelector(state => state.counter.caught);
 	let renderAcquired = "";
-	if (!acquired) {
-		renderAcquired = <Link to="/"><div>Go Catch Some Pokemon!</div></Link>;
+	if (!acquired || acquired.length === 0) {
+		renderAcquired = (
+			<Link to="/">
+				<div>Go Catch Some Pokemon!</div>
+			</Link>
+		);
 	} else {
 		renderAcquired = acquired.map((pokemon, index) => (
 			<div className="pokemon-caught-item" key={index}>
@@ -28,9 +31,7 @@ const Trainer = () => {
 					<img src={red} alt="" />
 				</div>
 				<div className="section-right">
-					<div className="pokemon-caught">
-                        {renderAcquired}
-                    </div>
+					<div className="pokemon-caught">{renderAcquired}</div>
 				</div>
 			</div>
 		</div>

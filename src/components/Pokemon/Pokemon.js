@@ -6,27 +6,27 @@ import {
 	fetchAsyncPokemonDetail,
 } from "../../redux/pokemons/pokeSlice";
 import { Link, useParams } from "react-router-dom";
-import { catchPokemon } from "../../redux/pokemons/trainerSlice";
+import { catchPokemon } from "../../redux/pokemons/counterSlice";
 
 const Pokemon = () => {
 	const { name } = useParams("name");
 	const pokemonDetail = useSelector(getPokemonDetail);
-    const acquiredPokemon = useSelector(state => state.acquiredPokemon);
-    const [catching, setCatching] = useState('Catch This?');
-    const [catchable, setCatchable] = useState(true);
+	const acquiredPokemon = useSelector((state) => state.counter.caught);
+	const [catching, setCatching] = useState("Catch This?");
+	const [catchable, setCatchable] = useState(false);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(fetchAsyncPokemonDetail(name));
+		if (acquiredPokemon && acquiredPokemon.length !== 0) {
+			let caught = acquiredPokemon.includes(pokemonDetail);
+			console.log("CAUGHT??", caught);
+			setCatchable(!caught);
+			if (!caught) {
+				setCatching("Caught!");
+			}
+		}
 	}, [name, dispatch]);
-
-    if (acquiredPokemon) {
-        let caught = acquiredPokemon.find(pokemonDetail.name);
-        setCatchable(caught);
-        if (caught) {
-            setCatching('Caught!');
-        }
-    }
 
 	let isLoading = <div>...Loading</div>;
 	let renderDetail = "";
@@ -66,17 +66,17 @@ const Pokemon = () => {
 		renderDetail = isLoading;
 	}
 
-    let handleCatch = () => {
-        if(!catchable) {
-            return;
-        }
-        setCatching('Catching now!');
-        setTimeout(() => {
-            dispatch(catchPokemon(name));
-            setCatching('Caught!');
-            setCatchable(false);
-        }, 3000)
-    }
+	let handleCatch = () => {
+		if (catchable) {
+			return;
+		}
+		setCatching("Catching now!");
+		setTimeout(() => {
+			dispatch(catchPokemon(name));
+			setCatching("Caught!");
+			setCatchable(false);
+		}, 3000);
+	};
 
 	return <div className="pokemon-section">{renderDetail}</div>;
 };
