@@ -1,0 +1,71 @@
+@import "../../common/colors.scss";
+
+.pokemon-section {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 40px 0px;
+	color: $font-primary;
+	font-weight: 400;
+}
+
+.pokemon-title {
+	padding-left: 3px;
+	margin-top: 20px;
+	color: $font-secondary;
+	display: flex;
+	text-transform: capitalize;
+	font-size: 40px;
+	justify-content: center;
+	span {
+		margin-right: 20px;
+	}
+}
+
+.pokemon-sprite {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 25px 0;
+	img {
+		border-radius: 15px;
+		background: #222;
+		height: 100%;
+		margin: 0 15px;
+		width: 200px;
+	}
+}
+
+.pokemon-info > div span:first-child {
+	padding: 10px 0px;
+	color: $font-primary;
+	font-weight: 600;
+	width: 100px;
+	display: inline-block;
+}
+
+.pokemon-info > div span {
+	color: $font-secondary;
+}
+
+.section-right {
+	margin-left: 30px;
+}
+
+.pokemon-catch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	button {
+		border: 1px solid $font-primary;
+        margin: 10px;
+		background-color: #222;
+		color: $font-primary;
+        padding: 10px;
+        border-radius: 15px;
+        transition: all 1s;
+        cursor: pointer;
+        &:hover {
+            font-size: 20px;
+        }
+	}
+}
