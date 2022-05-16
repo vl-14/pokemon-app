@@ -13,20 +13,26 @@ const Pokemon = () => {
 	const pokemonDetail = useSelector(getPokemonDetail);
 	const acquiredPokemon = useSelector((state) => state.counter.caught);
 	const [catching, setCatching] = useState("Catch This?");
-	const [catchable, setCatchable] = useState(false);
+	const [catchable, setCatchable] = useState(true);
 	const dispatch = useDispatch();
 
-	useEffect(() => {
+    const checkPokemonExistence = () => {
+        if (acquiredPokemon && acquiredPokemon.length !== 0) {
+            let caught = acquiredPokemon.includes(name);
+            if (caught) {
+                setCatchable(false);
+                setCatching("Caught!");
+            }
+        } else if (acquiredPokemon && acquiredPokemon.length === 6) {
+            setCatchable(false);
+            setCatching("Maximum 6!");
+        }
+    }
+
+    useEffect(() => {
 		dispatch(fetchAsyncPokemonDetail(name));
-		if (acquiredPokemon && acquiredPokemon.length !== 0) {
-			let caught = acquiredPokemon.includes(pokemonDetail);
-			console.log("CAUGHT??", caught);
-			setCatchable(!caught);
-			if (!caught) {
-				setCatching("Caught!");
-			}
-		}
-	}, [name, dispatch]);
+		checkPokemonExistence();
+	}, [dispatch, name]);
 
 	let isLoading = <div>...Loading</div>;
 	let renderDetail = "";
@@ -67,12 +73,15 @@ const Pokemon = () => {
 	}
 
 	let handleCatch = () => {
-		if (catchable) {
+		if (!catchable) {
 			return;
 		}
 		setCatching("Catching now!");
 		setTimeout(() => {
-			dispatch(catchPokemon(name));
+			dispatch(catchPokemon({
+                name: name,
+                id: pokemonDetail.id
+            }));
 			setCatching("Caught!");
 			setCatchable(false);
 		}, 3000);

@@ -12,12 +12,11 @@ export const counterSlice = createSlice({
         state.caught = [...state.caught, payload];
     },
     releasePokemon: (state, { payload }) => {
-        state.caught.filter((pokemon) => pokemon !== payload);
+        state.caught = state.caught.filter((pokemon) => pokemon.id !== payload);
     },
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { catchPokemon, releasePokemon } = counterSlice.actions
 
 export default counterSlice.reducer

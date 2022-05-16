@@ -1,11 +1,14 @@
 import React from "react";
 import "./Trainer.scss";
 import red from "../../images/red.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { imgUrl } from "../../common/constant";
+import { releasePokemon } from "../../redux/pokemons/counterSlice";
 
 const Trainer = () => {
-	const acquired = useSelector(state => state.counter.caught);
+	const acquired = useSelector((state) => state.counter.caught);
+    const dispatch = useDispatch();
 	let renderAcquired = "";
 	if (!acquired || acquired.length === 0) {
 		renderAcquired = (
@@ -14,18 +17,33 @@ const Trainer = () => {
 			</Link>
 		);
 	} else {
-		renderAcquired = acquired.map((pokemon, index) => (
-			<div className="pokemon-caught-item" key={index}>
-				{/* <img src="" alt="" /> */}
-				<div className="pokemon-caught-item-name">
-					<span>Ivysaur</span>
+		renderAcquired = acquired.map((pokemon, index) => {
+            const {name, id} = pokemon;
+			return (
+				<div className="pokemon-caught-item" key={index}>
+                    <button className="pokemon-caught-item-release" onClick={() => {
+                        handleRelease(id)
+                    }}>
+                        Release!
+                    </button>
+					<img src={imgUrl(id)} alt={name} />
+					<div className="pokemon-caught-item-name">
+						<span>{name}</span>
+					</div>
 				</div>
-			</div>
-		));
+			);
+		});
 	}
+
+    const handleRelease = (id) => {
+        dispatch(releasePokemon(id));
+    }
 
 	return (
 		<div>
+            <div className="section-title">
+                View Your Pokemons!
+            </div>
 			<div className="section">
 				<div className="section-left">
 					<img src={red} alt="" />
