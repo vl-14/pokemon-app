@@ -13,23 +13,24 @@ const Pokemon = () => {
 	const pokemonDetail = useSelector(getPokemonDetail);
 	const acquiredPokemon = useSelector((state) => state.counter.caught);
 	const [catching, setCatching] = useState("Catch This?");
+	const [process, setProcess] = useState(false);
 	const [catchable, setCatchable] = useState(true);
 	const dispatch = useDispatch();
 
-    const checkPokemonExistence = () => {
-        if (acquiredPokemon && acquiredPokemon.length !== 0) {
-            let caught = acquiredPokemon.includes(name);
-            if (caught) {
-                setCatchable(false);
-                setCatching("Caught!");
-            }
-        } else if (acquiredPokemon && acquiredPokemon.length === 6) {
-            setCatchable(false);
-            setCatching("Maximum 6!");
-        }
-    }
+	const checkPokemonExistence = () => {
+		if (acquiredPokemon && acquiredPokemon.length !== 0) {
+			let caught = acquiredPokemon.some(e => e.name === name);
+			if (caught) {
+				setCatchable(false);
+				setCatching("Caught!");
+			}
+		} else if (acquiredPokemon && acquiredPokemon.length === 6) {
+			setCatchable(false);
+			setCatching("Maximum 6!");
+		}
+	};
 
-    useEffect(() => {
+	useEffect(() => {
 		dispatch(fetchAsyncPokemonDetail(name));
 		checkPokemonExistence();
 	}, [dispatch, name]);
@@ -58,7 +59,12 @@ const Pokemon = () => {
 					</div>
 				</div>
 				<div className="pokemon-catch">
-					<button onClick={() => handleCatch()}>{catching}</button>
+					<button
+						className={process ? "catching" : ""}
+						onClick={() => handleCatch()}
+					>
+						{catching}
+					</button>
 					<Link to="/trainer">
 						<button>View Pocket</button>
 					</Link>
@@ -76,14 +82,18 @@ const Pokemon = () => {
 		if (!catchable) {
 			return;
 		}
+		setProcess(true);
 		setCatching("Catching now!");
 		setTimeout(() => {
-			dispatch(catchPokemon({
-                name: name,
-                id: pokemonDetail.id
-            }));
+			dispatch(
+				catchPokemon({
+					name: name,
+					id: pokemonDetail.id,
+				})
+			);
 			setCatching("Caught!");
 			setCatchable(false);
+			setProcess(false);
 		}, 3000);
 	};
 

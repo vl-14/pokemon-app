@@ -1,62 +1,63 @@
 .section {
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    padding: 15px;
-    width: 100%;
-    .section-left {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        img {
-            height: 100%;
-            width: 100%;
-        }
-    }
-    .section-right {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        flex-wrap: wrap;
-        flex: 4;
-    }
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	padding: 15px;
+	width: 100%;
+	.section-left {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+		img {
+			height: 100%;
+			width: 100%;
+		}
+	}
+	.section-right {
+		flex: 4;
+		.pokemon-caught {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+	}
 }
 
 .section-title {
-    font-size: 25px;
-    color: #fff;
-    margin: 15px 0;
-    text-align: center;
+	font-size: 25px;
+	color: #fff;
+	margin: 15px 0;
+	text-align: center;
 }
 
 .pokemon-caught-item {
-    height: 200px;
-    width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #222;
-    border-radius: 15px;
-    margin: 10px;
-    .pokemon-caught-item-name {
-        text-transform: uppercase;
-        text-align: center;
-    }
-    .pokemon-caught-item-release {
-        margin: 15px;
-        border-radius: 30px;
-        background-color: #fff;
-        padding: 5px 10px;
-        font-weight: bold;
-        color: #222;
-        cursor: pointer;
-        transition: all 0.3s;
-        &:hover {
-            transform: translateY(-5px);
-        }
-    }
+	height: 200px;
+	width: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-color: #222;
+	border-radius: 15px;
+	margin: 10px;
+	.pokemon-caught-item-name {
+		text-transform: uppercase;
+		text-align: center;
+	}
+	.pokemon-caught-item-release {
+		margin: 15px;
+		border-radius: 30px;
+		background-color: #fff;
+		padding: 5px 10px;
+		font-weight: bold;
+		color: #222;
+		cursor: pointer;
+		transition: all 0.3s;
+		&:hover {
+			transform: translateY(-5px);
+		}
+	}
 }
