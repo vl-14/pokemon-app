@@ -15,6 +15,13 @@ Redux
 Axios
 Node Sass
 
+## Future Plans
+
+Adding optimizations of resources using useCallback and useMemo where appropriate.
+Adding further details on the Pokemon being viewed with more information provided from the API.
+Adding edit functionality to directly alter the information stored in the Redux instead of just Delete and Create.
+Adding paginations, filtering and searching capability in the Pokemon list page.
+
 ## Available Scripts
 
 In the project directory, you can run:
