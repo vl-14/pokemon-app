@@ -1,6 +1,19 @@
-# Getting Started with Create React App
+# Pokemon App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Description
+
+This project uses free public API by PokeAPI and simulate a Pokemon trainer catching pokemons into his pockets. He can hold up to 6 pokemons.
+This project makes use of Redux state management tool to keep track of the current Pokemon caught and released.
+
+## Used
+
+React
+React Router
+Redux
+Axios
+Node Sass
 
 ## Available Scripts
 
